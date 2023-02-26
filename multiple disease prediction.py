@@ -5,9 +5,9 @@ from streamlit_option_menu import option_menu
 
 # loading the saved models
 
-diabetes_model = pickle.load(open("C:/Users/91934/OneDrive/Desktop/predections/diabetes_model.sav",'rb'))
+diabetes_model = pickle.load(open("C:/Users/91934/OneDrive/Desktop/predections/diabetes_model (1).sav",'rb'))
 
-heart_disease_model = pickle.load(open("C:/Users/91934/OneDrive/Desktop/predections/Heart_disease_model.sav",'rb'))
+heart_disease_model = pickle.load(open("C:/Users/91934/OneDrive/Desktop/predections/Heart_disease_model(1).sav",'rb'))
 
 parkinsons_model = pickle.load(open("C:/Users/91934/OneDrive/Desktop/predections/parkinson_model.sav",'rb'))
 
@@ -134,7 +134,7 @@ if (selected == 'Heart Disease Prediction'):
     # creating a button for Prediction
     
     if st.button('Heart Disease Test Result'):
-        heart_prediction = heart_disease_model.predict([[int(age), int(sex), int(cp), int(trestbps), int(chol), int(fbs), int(restecg),int(thalach),int(exang),int(oldpeak),int(slope),int(ca),int(thal)]])                          
+        heart_prediction = heart_disease_model.predict([[int(age), int(sex), int(cp), int(trestbps), int(chol), int(fbs), int(restecg),int(thalach),int(exang),float(oldpeak),int(slope),int(ca),int(thal)]])                          
         
         if (heart_prediction[0] == 1):
           heart_diagnosis = 'The person is having heart disease'
