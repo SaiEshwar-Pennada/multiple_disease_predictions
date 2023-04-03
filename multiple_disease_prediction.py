@@ -5,14 +5,13 @@ from streamlit_option_menu import option_menu
 
 # loading the saved models
 
-diabetes_model = pickle.load(open("C:/Users/91934/OneDrive/Desktop/predections/diabetes_model.sav",'rb'))
+diabetes_model = pickle.load(open("C:/Users/91934/OneDrive/Desktop/predections/diabetes_model (1).sav",'rb'))
 
-heart_disease_model = pickle.load(open("C:/Users/91934/OneDrive/Desktop/predections/Heart_disease_model.sav",'rb'))
+heart_disease_model = pickle.load(open("C:/Users/91934/OneDrive/Desktop/predections/Heart_disease_model(1).sav",'rb'))
 
 parkinsons_model = pickle.load(open("C:/Users/91934/OneDrive/Desktop/predections/parkinson_model.sav",'rb'))
 
-
-
+liver_model = pickle.load(open("C:/Users/91934/OneDrive/Desktop/predections/Liver_disease_model (1).sav",'rb'))
 # sidebar for navigation
 with st.sidebar:
     
@@ -20,9 +19,11 @@ with st.sidebar:
                           
                           ['Diabetes Prediction',
                            'Heart Disease Prediction',
-                           'Parkinsons Prediction'],
-                          icons=['activity','heart','person'],
+                           'Parkinsons Prediction',
+                           'Liver Disease Prediction'],
+                          icons=['activity','heart','person','arrow-right-circle'],
                           default_index=0)
+
     
     
 # Diabetes Prediction Page
@@ -134,7 +135,7 @@ if (selected == 'Heart Disease Prediction'):
     # creating a button for Prediction
     
     if st.button('Heart Disease Test Result'):
-        heart_prediction = heart_disease_model.predict([[int(age), int(sex), int(cp), int(trestbps), int(chol), int(fbs), int(restecg),int(thalach),int(exang),int(oldpeak),int(slope),int(ca),int(thal)]])                          
+        heart_prediction = heart_disease_model.predict([[int(age), int(sex), int(cp), int(trestbps), int(chol), int(fbs), int(restecg),int(thalach),int(exang),float(oldpeak),int(slope),int(ca),int(thal)]])                          
         
         if (heart_prediction[0] == 1):
           heart_diagnosis = 'The person is having heart disease'
@@ -235,3 +236,50 @@ if (selected == "Parkinsons Prediction"):
           parkinsons_diagnosis = "The person does not have Parkinson's disease"
         
     st.success(parkinsons_diagnosis)
+    
+
+
+
+# Liver Prediction Page  
+if (selected == 'Liver Disease Prediction'):
+    
+    st.title("Liver Disease Prediction using ML")
+    
+    col1, col2, col3, col4, col5 = st.columns(5)
+    
+    with col1:
+        Age = st.text_input('Age')
+    with col2:
+        Gender = st.text_input('Gender')
+    with col3:
+       Total_Bilirubin = st.text_input('Total_Bilirubin') 
+    with col4:
+        Direct_Bilirubin = st.text_input('Direct_Bilirubin')
+    with col5:
+        Alkaline_Phosphotase = st.text_input('Alkaline_Phosphotase')
+    with col1:
+        Alamine_Aminotransferase = st.text_input('Alamine_Aminotransferase')
+    with col2:
+        Aspartate_Aminotransferase = st.text_input('Aspartate_Aminotransferase')
+    with col3:
+        Total_Protiens = st.text_input('Total_Protiens')
+    with col4:
+        Albumin = st.text_input('Albumin')
+    with col5:
+        Albumin_and_Globulin_Ratio = st.text_input('Albumin_and_Globulin_Ratio')
+        
+    
+    liver_diagnosis = ''
+    
+    # creating a button for Prediction
+    
+    if st.button('Liver Disease Test Result'):
+        liver_prediction = liver_model.predict([[int(Age),int(Gender), float(Total_Bilirubin), float(Direct_Bilirubin), int(Alkaline_Phosphotase), int(Alamine_Aminotransferase), int(Aspartate_Aminotransferase),float(Total_Protiens),float(Albumin),float(Albumin_and_Globulin_Ratio)]])                      
+        
+        if (liver_prediction[0] == 1):
+          liver_diagnosis = 'The person is having Liver disease'
+        else:
+          liver_diagnosis = 'The person does not have any Liver disease'
+        
+    st.success(liver_diagnosis)
+    
